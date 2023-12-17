@@ -5,12 +5,12 @@ export interface IEvent extends Document {
     title: string;
     description?: string;
     location?: string;
-    createdAt?: Date;
+    createdAt: Date;
     imageUrl: string;
-    startDateTime?: Date;
-    endDateTime?: Date;
+    startDateTime: Date;
+    endDateTime: Date;
     price?: string;
-    isFree?: boolean;
+    isFree: boolean;
     url?: string;
     category: {_id: string,name: string }
     organizer: {_id: string,firstName: string,lastname:string }
@@ -22,7 +22,7 @@ const EventSchema = new Schema ({
     createdAt: {type: Date, default: Date.now},
     imageUrl: {type:String ,required: true},
     startDateTime: {type:Date,default : Date.now},
-    endDateTime: {Type:Date,default: Date.now},
+    endDateTime: {type:Date,default: Date.now}, 
     price: {type : String},
     isFree : {type: Boolean,default:false},
     url: {type: String},
