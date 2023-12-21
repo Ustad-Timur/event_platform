@@ -4,13 +4,15 @@ import { auth } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { DeleteConfirmation } from './DeleteConfirmation'
+
 type CardProps = {
     event: IEvent,
     hasOrderLink?: boolean,
     hidePrice?: boolean,
 
 }
-const Card = ({event ,hasOrderLink ,hidePrice}: CardProps) => {
+const  Card = ({event ,hasOrderLink ,hidePrice}: CardProps) => {
 
     const {sessionClaims} = auth();
     const userId = sessionClaims?.userId as string;
@@ -33,9 +35,10 @@ const Card = ({event ,hasOrderLink ,hidePrice}: CardProps) => {
                     alt="edit" width={20}
                     height={20} />
                 </Link>
+                    <DeleteConfirmation eventId={event._id}/>
                 </div>
         ) }
-        <Link href={`/events/${event._id}`}
+        <div
         className = 'flex min-h-[230px] flex-col gap-3 p-5 md:gap-4'>
            {!hidePrice &&  <div className='flex gap-2'>
                 <span className='p-semibold-14 w-min rounded-full
@@ -43,17 +46,20 @@ const Card = ({event ,hasOrderLink ,hidePrice}: CardProps) => {
                     {event.isFree ? 'FREE': `Rs:${event.price}`}
                 </span>
                 <p className='p-semibold-14 w-min rounded-full bg-grey-500/10
-                px-4 py-1 text-grey-500'>
+                px-4 py-1 text-grey-500 line-clamp-1'>
                     {event.category.name}
                 </p>
             </div>} 
             <p className='p-medium-16 p-medium-18 text-grey-500'>
                 {formatDateTime(event.startDateTime).dateTime}
             </p>
+
+            <Link href={`/events/${event._id}`}>
             <p className='p-medium-16 md:p-medium-20 line-clamp-2
             flex-1 text-black'>
                 {event.title}
             </p>
+            </Link>
             <div className='flex-between w-full'>
                 <p className='p-medium-14 md:p-medium-16 text-grey-600'>
                     {event.organizer.firstName} {event.organizer.lastName}
@@ -69,7 +75,7 @@ const Card = ({event ,hasOrderLink ,hidePrice}: CardProps) => {
                     </Link>
                 )}
             </div>
-        </Link>
+        </div>
         
     </div>
   )
